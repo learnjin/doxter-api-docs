@@ -8,32 +8,31 @@ layout: blog
 Doxter Synchronisation API v2.1
 
 
-Introduction
-Calendars
-GET /calendars
-GET /calendars/{id}
-Timeblocks
-GET /calendars/{id}/timeblocks{?updated, show_deleted}
-GET /calendars/{id}/timeblocks/{id}
-Bookings
-GET /calendars/{id}/bookings{?updated,status}
-GET /calendars/{calendar_id}/bookings/{id}
-PUT /calendars/{calendar_id}/bookings/{id}
-Blockings
-GET /calendars/{id}/blockings/{?updated}
-POST /calendars/{calendar_id}/blockings
-PUT /calendars/{calendar_id}/blockings/{id}
-DELETE /calendars/{calendar_id}/blockings/{id}
+	Introduction
+	Calendars
+	GET /calendars
+	GET /calendars/{id}
+	Timeblocks
+	GET /calendars/{id}/timeblocks{?updated, show_deleted}
+	GET /calendars/{id}/timeblocks/{id}
+	Bookings
+	GET /calendars/{id}/bookings{?updated,status}
+	GET /calendars/{calendar_id}/bookings/{id}
+	PUT /calendars/{calendar_id}/bookings/{id}
+	Blockings
+	GET /calendars/{id}/blockings/{?updated}
+	POST /calendars/{calendar_id}/blockings
+	PUT /calendars/{calendar_id}/blockings/{id}
+	DELETE /calendars/{calendar_id}/blockings/{id}
 
 
-Introduction
+## Introduction
 
-Welcome to the doxter API specification for synchronisation. With the doxter API you can access your calendars, get updates of new bookings, reschedule bookings and block available times.
+Welcome to the doxter API specification for synchronisation. With the doxter API you can access your calendars, get updates of new bookings, reschedule bookings and block available times.  
 
+### Authentication
 
-Authentication
-
-HTTP Basic authentication. Username and password come from a valid login on doxter. One account can have many logins. One login can also be connected to many accounts. Passwords can be reset on the login page.
+HTTP Basic authentication. Username and password come from a valid login on doxter. One account can have many logins. One login can also be connected to many accounts. Passwords can be reset on the _login page_.  
 
 API Base URL: https://www.doxter.de/api/v2/
 

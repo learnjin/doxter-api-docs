@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Doxter-api-docs : ">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Doxter-api-docs</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/doxter/doxter-api-docs">View on GitHub</a>
+
+          <h1 id="project_title">Doxter-api-docs</h1>
+          <h2 id="project_tagline"></h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/doxter/doxter-api-docs/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/doxter/doxter-api-docs/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h2>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
+
+<p>The doxter Practice API is a service that returns information about doctor practices using HTTP requests. The service is accessed as an HTTP request and returns JSON only. The Pratice API uses a doxter ID to uniquely identify a practice.</p>
+
+<h3>
+<a id="authentication" class="anchor" href="#authentication" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authentication</h3>
+
+<p>The doxter Practice API uses BASIC AUTH to authenticate valid consumers. Contact Doxter to receive your credentials.</p>
+
+<h2>
+<a id="practice-search" class="anchor" href="#practice-search" aria-hidden="true"><span class="octicon octicon-link"></span></a>Practice Search</h2>
+
+<p>A Practice Search returns a list of practices along with summary information about each practice. The default is to return all active practices on doxter. The results may be paginated, in which case you find a <code>pageToken</code> in the metadata.</p>
+
+<p>A Search request is an HTTP URL of the following form:</p>
+
+<pre><code>GET https://practices.doxterapis.com/v1/search?parameters
+</code></pre>
+
+<p><strong>Optional parameters</strong></p>
+
+<p><em>(token explanation is taken verbatim from google calendar api)</em></p>
+
+<ul>
+<li><p><code>sync_token</code> - Token obtained from the <code>next_sync_token</code> field returned on the last page of results from the previous request. It makes the result of this list request contain only entries that have changed since then. All events deleted since the previous list request will always be in the result set</p></li>
+<li><p><code>page_token</code> - Token obtained from the <code>next_page_token</code> field that is returned if the results are paginated. Optional, but always together with <code>sync_token</code>.</p></li>
+</ul>
+
+<h2>
+<a id="search-responses" class="anchor" href="#search-responses" aria-hidden="true"><span class="octicon octicon-link"></span></a>Search Responses</h2>
+
+<p>Search responses are returned JSON format. The following example shows a search result. The response has different fields depending on the type of practice.</p>
+
+<div class="highlight highlight-JSON"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>results<span class="pl-pds">"</span></span>: [
+        {
+            <span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>54dde78366323021eb550000<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>GROUP<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>formatted_name<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>HNO Praxis Fuhrmann, Weikert, Hake<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>name_components<span class="pl-pds">"</span></span>: {
+                <span class="pl-s"><span class="pl-pds">"</span>company<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>HNO Praxis Fuhrmann, Weikert, Hake<span class="pl-pds">"</span></span>
+            },
+            <span class="pl-s"><span class="pl-pds">"</span>formatted_address<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Paracelsusstraße 1, 93053 Regensburg<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>international_phone_number<span class="pl-pds">"</span></span>: <span class="pl-c1">null</span>,
+            <span class="pl-s"><span class="pl-pds">"</span>url<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>http://www.doxter.de/practices/54dde78366323021eb550000<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>job_titles<span class="pl-pds">"</span></span>: [
+                <span class="pl-s"><span class="pl-pds">"</span>Hals-Nasen-Ohrenheilkunde<span class="pl-pds">"</span></span>
+            ],
+            <span class="pl-s"><span class="pl-pds">"</span>focuses<span class="pl-pds">"</span></span>: [
+                <span class="pl-s"><span class="pl-pds">"</span>Gleichgewichtsstörungen<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>Schlechte Nasenatmung<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>Verzögerte Sprachentwicklung<span class="pl-pds">"</span></span>               
+            ],
+            <span class="pl-s"><span class="pl-pds">"</span>photos<span class="pl-pds">"</span></span>: [
+                <span class="pl-s"><span class="pl-pds">"</span>https://doxter.s3.amazonaws.com/assets/images/doctors/54dde7b46632380011bb0000.jpeg<span class="pl-pds">"</span></span>
+            ],
+            <span class="pl-s"><span class="pl-pds">"</span>insurances<span class="pl-pds">"</span></span>: [
+                <span class="pl-s"><span class="pl-pds">"</span>GKV<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>PKV<span class="pl-pds">"</span></span>
+            ],
+            <span class="pl-s"><span class="pl-pds">"</span>geometry<span class="pl-pds">"</span></span>: {
+                <span class="pl-s"><span class="pl-pds">"</span>location<span class="pl-pds">"</span></span>: {
+                    <span class="pl-s"><span class="pl-pds">"</span>lat<span class="pl-pds">"</span></span>: <span class="pl-c1">49.01040279999999</span>,
+                    <span class="pl-s"><span class="pl-pds">"</span>lng<span class="pl-pds">"</span></span>: <span class="pl-c1">12.096912599999996</span>
+                }
+            },
+            <span class="pl-s"><span class="pl-pds">"</span>address_components<span class="pl-pds">"</span></span>: {
+                <span class="pl-s"><span class="pl-pds">"</span>street<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Paracelsusstraße 1<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>zip<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>93053<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>city<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Regensburg<span class="pl-pds">"</span></span>
+            },
+            <span class="pl-s"><span class="pl-pds">"</span>status<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>LISTED<span class="pl-pds">"</span></span>
+        },
+        {
+            <span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>54ddef6d3030312a5d420000<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>SINGLE<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>formatted_name<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Dr. Marc Lamek<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>name_components<span class="pl-pds">"</span></span>: {
+                <span class="pl-s"><span class="pl-pds">"</span>gender<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Herr<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>title<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Dr.<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>first_name<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Marc<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>last_name<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Lamek<span class="pl-pds">"</span></span>
+            },
+            <span class="pl-s"><span class="pl-pds">"</span>formatted_address<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Rehmstr. 1a, 49080 Osnabrück<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>international_phone_number<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>+49 30 1234 456<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>url<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>http://www.doxter.de/doctors/54ddef6d3030312a5d420000<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>rating<span class="pl-pds">"</span></span>: <span class="pl-c1">4.9</span>,
+            <span class="pl-s"><span class="pl-pds">"</span>job_titles<span class="pl-pds">"</span></span>: [
+                <span class="pl-s"><span class="pl-pds">"</span>Implantologe<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>Ästhetischer Zahnarzt<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>Endodontologe<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>Parodontologe<span class="pl-pds">"</span></span>
+            ],
+            <span class="pl-s"><span class="pl-pds">"</span>focuses<span class="pl-pds">"</span></span>: [
+                <span class="pl-s"><span class="pl-pds">"</span>Implantologie zertifiziert<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>Endodontologie zertifiziert<span class="pl-pds">"</span></span>
+            ],
+            <span class="pl-s"><span class="pl-pds">"</span>photos<span class="pl-pds">"</span></span>: [
+                <span class="pl-s"><span class="pl-pds">"</span>https://doxter.s3.amazonaws.com/assets/images/doctors/54ddef6d3030312a5d420000.png<span class="pl-pds">"</span></span>
+            ],
+            <span class="pl-s"><span class="pl-pds">"</span>insurances<span class="pl-pds">"</span></span>: [
+                <span class="pl-s"><span class="pl-pds">"</span>GKV<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>PKV<span class="pl-pds">"</span></span>
+            ],
+            <span class="pl-s"><span class="pl-pds">"</span>geometry<span class="pl-pds">"</span></span>: {
+                <span class="pl-s"><span class="pl-pds">"</span>location<span class="pl-pds">"</span></span>: {
+                    <span class="pl-s"><span class="pl-pds">"</span>lat<span class="pl-pds">"</span></span>: <span class="pl-c1">52.2694645</span>,
+                    <span class="pl-s"><span class="pl-pds">"</span>lng<span class="pl-pds">"</span></span>: <span class="pl-c1">8.041485100000045</span>
+                }
+            },
+            <span class="pl-s"><span class="pl-pds">"</span>address_components<span class="pl-pds">"</span></span>: {
+                <span class="pl-s"><span class="pl-pds">"</span>street<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Rehmstr. 1a<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>zip<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>49080<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>city<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>Osnabrück<span class="pl-pds">"</span></span>
+            },
+            <span class="pl-s"><span class="pl-pds">"</span>status<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>LISTED<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>available_times<span class="pl-pds">"</span></span>: [
+                <span class="pl-s"><span class="pl-pds">"</span>2015-06-01T14:30:00+02:00<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>2015-06-03T10:00:00+02:00<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>2015-06-08T08:30:00+02:00<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>2015-06-08T14:30:00+02:00<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>2015-06-10T10:00:00+02:00<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>2015-06-15T08:30:00+02:00<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>2015-06-15T14:30:00+02:00<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>2015-06-17T10:00:00+02:00<span class="pl-pds">"</span></span>
+            ]
+
+        }],
+      <span class="pl-s"><span class="pl-pds">"</span>next_sync_token<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>T1FNcjB4Nlc3OU1QczVBdFRqUGFmemxiSWU2alV6b2pnZ29ZQ2xSdElNdEJTNnBnWENNWHRiYStMZUJ0ZXpFTy0tcEhZVHd3eUwxeTBuQmpRcXdyUFA4dz09--c2e9930792560c97e6fd22c91a6ae3ba123232<span class="pl-pds">"</span></span>,
+      <span class="pl-s"><span class="pl-pds">"</span>status<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>OK<span class="pl-pds">"</span></span>    
+}</pre></div>
+
+<p>The JSON response contains two root elements:</p>
+
+<p><code>meta</code> - contains metadata on the request. See Status and Synchronization below.
+<code>results</code> - contains an array of practices with information about each. See Search Results for information about these results.</p>
+
+<h3>
+<a id="metadata" class="anchor" href="#metadata" aria-hidden="true"><span class="octicon octicon-link"></span></a>Metadata</h3>
+
+<h4>
+<a id="status-codes" class="anchor" href="#status-codes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Status Codes</h4>
+
+<ul>
+<li>
+<code>OK</code> indicates that no errors occurred</li>
+<li>
+<code>INVALID_TOKEN</code> indicates that either the sync or page token is invalid.</li>
+</ul>
+
+<h4>
+<a id="synchronization" class="anchor" href="#synchronization" aria-hidden="true"><span class="octicon octicon-link"></span></a>Synchronization</h4>
+
+<p>Using the metadata from the Practice Service "you can keep data for all [practice] collections in sync while saving bandwidth" (<a href="https://developers.google.com/google-apps/calendar/v3/sync"><em>Synchronize Resources Efficiently, Google Calendar API</em></a>).</p>
+
+<ul>
+<li><p><code>next_sync_token</code> - Token used at a later point in time to retrieve only the entries that have changed since this result was returned. Omitted if further results are available, in which case next_page_token is provided.</p></li>
+<li><p><code>next_page_token</code> - Token used to access the next page of this result. Omitted if no further results are available, in which case next_sync_token is provided.</p></li>
+</ul>
+
+<h2>
+<a id="search-results" class="anchor" href="#search-results" aria-hidden="true"><span class="octicon octicon-link"></span></a>Search Results</h2>
+
+<p>When the Practice service returns JSON results from a search, it places them within a results array. Even if the service returns no results it still returns an empty results array.</p>
+
+<p>Each result within the results array may contain the following fields:</p>
+
+<ul>
+<li>
+<code>id</code> - contains a unique stable identifier denoting this practice</li>
+<li>
+<code>type</code> - describing the given practice. Possible types are:
+
+<ul>
+<li>
+<code>"SINGLE"</code> an individual practice with one doctor</li>
+<li>
+<code>"GROUP"</code> for group practices.</li>
+</ul>
+</li>
+<li>
+<code>industries[]</code> generalizes all practice's fields into one or several of:
+
+<ul>
+<li>
+<code>"ZAHNMEDIZIN"</code> - All dentist related fields</li>
+<li>
+<code>"FACHMEDIZIN"</code> - All regular doctor fields</li>
+<li>
+<code>"PRIVATMEDIZIN"</code> - Privat fields not covered by public insurance</li>
+</ul>
+</li>
+<li>
+<code>formatted_name</code> is a string containing the human-readable name of this practice</li>
+<li>
+<code>name_components[]</code> is an array of separate name components. It can contain:
+
+<ul>
+<li>
+<code>gender</code> can be either: <code>"Herr"</code> or <code>"Frau"</code>
+</li>
+<li>
+<code>title</code> contains the academic title like <code>"Dr."</code> or <code>"Prof. Dr."</code>
+</li>
+<li>
+<code>first_name</code> is the first name of the person</li>
+<li>
+<code>last_name</code> is the last name of the person</li>
+<li>
+<code>company</code> the name of the practice</li>
+</ul>
+</li>
+<li>
+<code>formatted_address</code> is a string containing the human-readable address of this place.</li>
+<li>
+<code>international_phone_number</code> contains the place's phone number in international format.International format includes the country code, and is prefixed with the plus (+) sign. For example, the <code>international_phone_number</code> for Doxters's Berlin, Germany office is <code>"+49 30 609 849 65"</code> </li>
+<li>
+<code>url</code> contains the URL of the official doxter page for this practice</li>
+<li>
+<code>rating</code> the user's overall rating for this practice. Optional.</li>
+<li>
+<code>rating_count</code> the number of ratings for this practice. Optional, but always given when <code>rating</code> is.</li>
+<li>
+<code>job_titles[]</code> contains an array of practice type or gender inflected specialties. For example: dentist will inflect to <code>"Zahnarzt"</code> for a single male practice, <code>"Zahnärztin"</code> for a single female practice and <code>"Zahnmedizin"</code> for a group practice.</li>
+<li>
+<code>focuses[]</code> an array of focus areas of the practice. In contrast to the <code>job_titles</code> this is not a curated list. The list may contain entries like <code>"Ästhetische Zahnmedizin</code>", <code>"Prophylaxe"</code> or <code>"Invisalign"</code>
+</li>
+<li>
+<code>photos[]</code> an array of photo urls. A Practice Search will return at most one photo object. </li>
+<li>
+<code>insurances[]</code> is a list of accepted insurances. It can contain <code>GKV</code> and <code>PKV</code>.</li>
+<li>
+<code>geometry</code> contains geometry information about the result, including the location (geocode) of the place.</li>
+<li>
+<code>address_components[]</code> is an array of separate address components used to compose a given address. It contains:
+
+<ul>
+<li><code>street</code></li>
+<li><code>zip</code></li>
+<li><code>city</code></li>
+</ul>
+</li>
+<li>
+<code>status</code>: Status of the practice. Possible values are:
+
+<ul>
+<li>
+<code>"DELETED"</code> - the practice has been deleted from doxter</li>
+<li>
+<code>"LISTED"</code> - the practice is listed on doxter</li>
+</ul>
+</li>
+<li>
+<code>available_times[]</code>: An array of times in ISO8601 format with available times of this practice or this doctor. Optional. </li>
+</ul>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Doxter-api-docs maintained by <a href="https://github.com/doxter">doxter</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>

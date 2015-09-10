@@ -36,8 +36,7 @@ _(token explanation is taken verbatim from google calendar api)_
 
 Search responses are returned JSON format. The following example shows a search result. The response has different fields depending on the type of practice.  
 
-```
-JSON
+```JSON
 {
     "results": [
         {

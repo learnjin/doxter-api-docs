@@ -54,13 +54,13 @@ Booked bookings are stored on the calendars. Calendars are created for the type 
 Get all calendars from all accounts the user has access rights to.  
 
 ```
-curl "https://www.doxter.de/api/v2/calendars" -u login@example.com:password  
+curl "https://www.doxter.de/api/v2/calendars" -u login@example.com:password
 ```
 
 ### Response Headers
 
 ```
-Content-Type: application/json  
+Content-Type: application/json
 ```
 
 ### Response Body
@@ -71,7 +71,7 @@ Fields in the response
 - **name:** the name of the calendar for internal discrimination  
 - **profile_name:** The name of the doctor or practice the calendar is shown on  
 
-```
+```JSON
 [
     {
         "_id": "4f02608e18cb71000100004b",
@@ -100,18 +100,18 @@ response(status): 401
 Retrieve a single calendar. Includes general information about the calendar not including  bookings nor timeblocks.  
 
 ```
-curl "https://www.doxter.de/api/v2/calendars/4f02608e18cb71000100004b" -u login@example.com:password  
+curl "https://www.doxter.de/api/v2/calendars/4f02608e18cb71000100004b" -u login@example.com:password
 ```
 
 ### Response Headers
 
 ```
-Content-Type: application/json  
+Content-Type: application/json
 ```
 
 ### Response Body
 
-```
+```JSON
 {
     "_id": "4f02608e18cb71000100004b",
     "name": "Standardkalender",
@@ -122,7 +122,7 @@ Content-Type: application/json
 ### Error Case (Calendar does not exist):
 
 ```
-curl -I "https://www.doxter.de/api/v2/calendars/doesnotexist" -u login@example.com:password  
+curl -I "https://www.doxter.de/api/v2/calendars/doesnotexist" -u login@example.com:password
 ```
 
 response status: 404  
@@ -143,13 +143,13 @@ parameters:
 Get all timeblocks for the given calendar.  
 
 ```
-curl "https://www.doxter.de/api/v2/calendars/4f02608e18cb71000100004b/timeblocks" -u login@example.com:password  
+curl "https://www.doxter.de/api/v2/calendars/4f02608e18cb71000100004b/timeblocks" -u login@example.com:password
 ```
 
 ### Response Headers
 
 ```
-Content-Type: application/json  
+Content-Type: application/json
 ```
 
 ### Response Body
@@ -174,7 +174,7 @@ Fields in the reponse:
 - **range_limit_for_timeslots**: in seconds, defines the value until a booking can be made from now in the future  
 - **status**: INACTIVE | ACTIVE | DELETED  
 
-```
+```JSON
 [
     {
         "begins_at": "09:15",
@@ -219,20 +219,20 @@ Fields in the reponse:
 Get a specific timeblock for a given calendar.   
 
 ```
-curl "https://www.doxter.de/api/v2/calendars/4f02608e18cb71000100004b/timeblocks/4f02608e18cb71abc12341c1" -u login@example.com:password  
+curl "https://www.doxter.de/api/v2/calendars/4f02608e18cb71000100004b/timeblocks/4f02608e18cb71abc12341c1" -u login@example.com:password
 ```
 
 ### Response Headers
 
 ```
-Content-Type: application/json  
+Content-Type: application/json
 ```
 
 ### Response Body
 
 Fields in the reponse are the same as above.  
 
-```
+```JSON
     {
         "_id": "4f02608e18cb71abc12341c1",
         "begins_at": "09:15",
@@ -266,13 +266,13 @@ Through API booking cannot be created,  instead should be synchronized through b
 Get all updated bookings for the specified calendar. This will return all bookings since updated. Even canceled ones.  
 
 ```
-curl "https://www.doxter.de/api/v2/calendars/4f02608e18cb71000100004b/bookings?updated=2014-03-08T10:54:14+01:00" -u login@example.com:password  
+curl "https://www.doxter.de/api/v2/calendars/4f02608e18cb71000100004b/bookings?updated=2014-03-08T10:54:14+01:00" -u login@example.com:password
 ```
 
 ### Response Headers
 
 ```
-Content-Type: application/json  
+Content-Type: application/json
 ```
 
 ### Response Body
@@ -291,7 +291,7 @@ Fields in the response
   - **CONFIRMED**: event has been confirmed by the practice  
   - **RESCHEDULED**: event has been rescheduled by the practice at least once  
 
-```
+```JSON
 [
     {
         "_id": "5319db7acb2fa546f1000026",
@@ -338,18 +338,18 @@ Fields in the response
 ### Error case (update parameter is missing):
 
 ```
-curl "https://www.doxter.de/api/v2/calendars/4f02608e18cb71000100004b/bookings" -u login@example.com:password  
+curl "https://www.doxter.de/api/v2/calendars/4f02608e18cb71000100004b/bookings" -u login@example.com:password
 ```
 
 ### Response Headers
 
 ```
-Content-Type: application/json  
+Content-Type: application/json
 ```
 
 ### Response Body
 
-```
+```JSON
 {
     "error": "updated is missing"
 }
@@ -360,13 +360,13 @@ Content-Type: application/json
 Get the specified booking for the specified calendar.  
 
 ```
-curl "https://www.doxter.de/api/v2/calendars/4f02608e18cb71000100004b/bookings/4f02608e18cb71000141cb11" -u login@example.com:password  
+curl "https://www.doxter.de/api/v2/calendars/4f02608e18cb71000100004b/bookings/4f02608e18cb71000141cb11" -u login@example.com:password
 ```
 
 ### Response Headers
 
 ```
-Content-Type: application/json  
+Content-Type: application/json
 ```
 
 ### Response Body
@@ -377,7 +377,7 @@ Fields in the response
 - **confirmation_link**: Visiting the confirmation link prbookings doxter support to call the practice to verify if the booking has been seen.  
 - **first_name**: Contains full_name  
 
-```
+```JSON
     {
         "_id": "4f02608e18cb71000141cb11",
         "created_at": "2014-03-07T15:45:14+01:00",
@@ -403,18 +403,18 @@ Fields in the response
 ### Error case (update parameter is missing):
 
 ```
-curl "https://www.doxter.de/api/v2/calendars/4f02608e18cb71000100004b/bookings/4f02608e18cb71000100003c" -u login@example.com:password  
+curl "https://www.doxter.de/api/v2/calendars/4f02608e18cb71000100004b/bookings/4f02608e18cb71000100003c" -u login@example.com:password
 ```
 
 ### Response Headers
 
 ```
-Content-Type: application/json  
+Content-Type: application/json
 ```
 
 ### Response Body
 
-```
+```JSON
 {
     "error": "Booking not found"
 }
@@ -439,13 +439,13 @@ parameters:
   - *Notice 2: If booking.starts is changed, and there is no status passed in, or the passed status is not cancelled, the status of the blloking will automatically change to RESCHEDULED.*  
 
 ```
-curl -X PUT --data "starts=2014-04-07T11:00:00+01:00&ends=2014-04-07T12:00:00+01:00&status=CANCELED&title=’some title’" "https://www.doxter.de/api/v2/calendars/4f02608e18cb71000100004b/bookings/4f02608e18cb71000141cb11" -u login@example.com:password  
+curl -X PUT --data "starts=2014-04-07T11:00:00+01:00&ends=2014-04-07T12:00:00+01:00&status=CANCELED&title=’some title’" "https://www.doxter.de/api/v2/calendars/4f02608e18cb71000100004b/bookings/4f02608e18cb71000141cb11" -u login@example.com:password
 ```
 
 ### Response Headers
 
 ```
-Content-Type: application/json  
+Content-Type: application/json
 ```
 
 ### Response Body
@@ -456,7 +456,7 @@ Fields in the response
 - **confirmation_link**: Visiting the confirmation link prbookings doxter support to call the practice to verify if the booking has been seen.  
 - **first_name**: Contains full_name  
 
-```
+```JSON
     {
         "_id": "4f02608e18cb71000141cb11",
         "created_at": "2014-03-07T15:45:14+01:00",
@@ -479,18 +479,18 @@ Fields in the response
 ### Error case (update parameter is missing):
 
 ```
-curl "https://www.doxter.de/api/v2/calendars/4f02608e18cb71000100004b/bookings/4f02608e18cb71000100003c" -u login@example.com:password  
+curl "https://www.doxter.de/api/v2/calendars/4f02608e18cb71000100004b/bookings/4f02608e18cb71000100003c" -u login@example.com:password
 ```
 
 ### Response Headers
 
 ```
-Content-Type: application/json  
+Content-Type: application/json
 ```
 
 ### Response Body
 
-```
+```JSON
 {
     "error": "Booking not found"
 }
@@ -511,18 +511,18 @@ Get all updated blockings for the specified calendar.
 - **updated**: ISO8601 time. Only gives events which where updated since from and including that time.  
 
 ```
-curl "https://www.doxter.de/api/v2/calendars/4f02608e18cb71000100004b/blockings?updated=2014-03-08T10:54:14+01:00" -u login@example.com:password  
+curl "https://www.doxter.de/api/v2/calendars/4f02608e18cb71000100004b/blockings?updated=2014-03-08T10:54:14+01:00" -u login@example.com:password
 ```
 
 ### Response Headers
 
 ```
-Content-Type: application/json  
+Content-Type: application/json
 ```
 
 ### Response Body
 
-```
+```JSON
 [
     {
         "_id": "5319db7acb2fa546f1000026",
@@ -548,18 +548,18 @@ Content-Type: application/json
 ### Error case (update parameter is missing):
 
 ```
-curl "https://www.doxter.de/api/v2/calendars/4f02608e18cb71000100004b/blockings" -u login@example.com:password  
+curl "https://www.doxter.de/api/v2/calendars/4f02608e18cb71000100004b/blockings" -u login@example.com:password
 ```
 
 ### Response Headers
 
 ```
-Content-Type: application/json  
+Content-Type: application/json
 ```
 
 ### Response Body
 
-```
+```JSON
 {
     "error": "updated is missing"
 }
@@ -570,13 +570,13 @@ Content-Type: application/json
 Create a new blocking on the specified doxter calendar. Every event blocking on doxter will prevent the generation of available times during that duration.  
 
 ```
-curl -X POST --data "starts=2014-03-11T13:18:33+01:00&ends=2014-03-11T15:19:22+01:00&title=BlockingTitle" "https://www.doxter.de/api/v2/calendars/4f02608e18cb71000100004b/blockings" -u login@example.com:password  
+curl -X POST --data "starts=2014-03-11T13:18:33+01:00&ends=2014-03-11T15:19:22+01:00&title=BlockingTitle" "https://www.doxter.de/api/v2/calendars/4f02608e18cb71000100004b/blockings" -u login@example.com:password
 ```
 
 ### Response Headers
 
 ```
-Content-Type: application/json  
+Content-Type: application/json
 ```
 
 ### Response Body
@@ -589,7 +589,7 @@ Fields in the reponse:
 - **end**: end time of event (exlusive)  
 - **recurrence**:  iCal compatible rrule: "RRULE:FREQ=WEEKLY;UNTIL=20150101T000000Z"  
 
-```
+```JSON
 {
     "_id": "531ee370bb3357eb20000001",
     "created_at": "2014-03-11T11:20:32+01:00",
@@ -615,18 +615,18 @@ Updates an existing blocking. This can be used move an existing blocking on doxt
 - recurrence (optional)  
 
 ```
-curl -X PUT --data "starts=2014-04-07T11:00:00+01:00&ends=2014-04-07T12:00:00+01:00"  "https://www.doxter.de/api/v2/calendars/4f02608e18cb71000100004b/blockings/5315f6493f977fb23a00005f" -u login@example.com:password  
+curl -X PUT --data "starts=2014-04-07T11:00:00+01:00&ends=2014-04-07T12:00:00+01:00"  "https://www.doxter.de/api/v2/calendars/4f02608e18cb71000100004b/blockings/5315f6493f977fb23a00005f" -u login@example.com:password
 ```
 
 ### Response Headers
 
 ```
-Content-Type: application/json  
+Content-Type: application/json
 ```
 
 ### Response Body
 
-```
+```JSON
 {
     "_id": "5315f6493f977fb23a00005f",
     "created_at": "2014-03-11T11:20:32+01:00",
@@ -644,18 +644,18 @@ Content-Type: application/json
 Deletes an existing blocking.  
 
 ```
-curl -X DELETE --data "starts=2014-04-07T11:00:00+01:00&ends=2014-04-07T12:00:00+01:00"  "https://www.doxter.de/api/v2/calendars/4f02608e18cb71000100004b/blockings/5315f6493f977fb23a00005f" -u login@example.com:password  
+curl -X DELETE --data "starts=2014-04-07T11:00:00+01:00&ends=2014-04-07T12:00:00+01:00"  "https://www.doxter.de/api/v2/calendars/4f02608e18cb71000100004b/blockings/5315f6493f977fb23a00005f" -u login@example.com:password
 ```
 
 ### Response Headers
 
 ```
-Content-Type: application/json  
+Content-Type: application/json
 ```
 
 ### Response Body
 
-```
-{}  
+```JSON
+{}
 ```
 

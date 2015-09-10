@@ -1,42 +1,43 @@
 ---
-layout: blog
+layout: default
 ---
 
 # Publisher API
 
 ## Introduction
 
-The doxter Practice API is a service that returns information about doctor practices using HTTP requests. The service is accessed as an HTTP request and returns JSON only. The Pratice API uses a doxter ID to uniquely identify a practice.
+The doxter Practice API is a service that returns information about doctor practices using HTTP requests. The service is accessed as an HTTP request and returns JSON only. The Pratice API uses a doxter ID to uniquely identify a practice.  
 
 ### Authentication
 
-The doxter Practice API uses BASIC AUTH to authenticate valid consumers. Contact Doxter to receive your credentials.
+The doxter Practice API uses BASIC AUTH to authenticate valid consumers. Contact Doxter to receive your credentials.  
 
 
 ## Practice Search
 
-A Practice Search returns a list of practices along with summary information about each practice. The default is to return all active practices on doxter. The results may be paginated, in which case you find a `pageToken` in the metadata.
+A Practice Search returns a list of practices along with summary information about each practice. The default is to return all active practices on doxter. The results may be paginated, in which case you find a `pageToken` in the metadata.  
 
-A Search request is an HTTP URL of the following form:
+A Search request is an HTTP URL of the following form:  
 
 ```
 GET https://practices.doxterapis.com/v1/search?parameters
 ```
 
-**Optional parameters**
+**Optional parameters**  
 
-_(token explanation is taken verbatim from google calendar api)_
+_(token explanation is taken verbatim from google calendar api)_  
 
-- `sync_token` - Token obtained from the `next_sync_token` field returned on the last page of results from the previous request. It makes the result of this list request contain only entries that have changed since then. All events deleted since the previous list request will always be in the result set
+- `sync_token` - Token obtained from the `next_sync_token` field returned on the last page of results from the previous request. It makes the result of this list request contain only entries that have changed since then. All events deleted since the previous list request will always be in the result set  
 
-- `page_token` - Token obtained from the `next_page_token` field that is returned if the results are paginated. Optional, but always together with `sync_token`.
+- `page_token` - Token obtained from the `next_page_token` field that is returned if the results are paginated. Optional, but always together with `sync_token`.  
 
 
 ## Search Responses
 
-Search responses are returned JSON format. The following example shows a search result. The response has different fields depending on the type of practice.
+Search responses are returned JSON format. The following example shows a search result. The response has different fields depending on the type of practice.  
 
-```JSON
+```
+JSON
 {
     "results": [
         {
@@ -133,68 +134,67 @@ Search responses are returned JSON format. The following example shows a search 
 
         }],
       "next_sync_token": "T1FNcjB4Nlc3OU1QczVBdFRqUGFmemxiSWU2alV6b2pnZ29ZQ2xSdElNdEJTNnBnWENNWHRiYStMZUJ0ZXpFTy0tcEhZVHd3eUwxeTBuQmpRcXdyUFA4dz09--c2e9930792560c97e6fd22c91a6ae3ba123232",
-      "status": "OK"    
+      "status": "OK"
 }
 ```
-The JSON response contains two root elements:
+The JSON response contains two root elements:  
 
-`meta` - contains metadata on the request. See Status and Synchronization below.
-`results` - contains an array of practices with information about each. See Search Results for information about these results.
-
+`meta` - contains metadata on the request. See Status and Synchronization below.  
+`results` - contains an array of practices with information about each. See Search Results for information about these results.  
 
 ### Metadata
 
 #### Status Codes
 
-- `OK` indicates that no errors occurred
-- `INVALID_TOKEN` indicates that either the sync or page token is invalid.
+- `OK` indicates that no errors occurred  
+- `INVALID_TOKEN` indicates that either the sync or page token is invalid.  
 
 #### Synchronization
 
-Using the metadata from the Practice Service "you can keep data for all [practice] collections in sync while saving bandwidth" ([_Synchronize Resources Efficiently, Google Calendar API_](https://developers.google.com/google-apps/calendar/v3/sync)).
+Using the metadata from the Practice Service "you can keep data for all [practice] collections in sync while saving bandwidth" ([_Synchronize Resources Efficiently, Google Calendar API_](https://developers.google.com/google-apps/calendar/v3/sync)).  
 
-- `next_sync_token` - Token used at a later point in time to retrieve only the entries that have changed since this result was returned. Omitted if further results are available, in which case next_page_token is provided.
+- `next_sync_token` - Token used at a later point in time to retrieve only the entries that have changed since this result was returned. Omitted if further results are available, in which case next_page_token is provided.  
 
-- `next_page_token` - Token used to access the next page of this result. Omitted if no further results are available, in which case next_sync_token is provided.
+- `next_page_token` - Token used to access the next page of this result. Omitted if no further results are available, in which case next_sync_token is provided.  
 
 ## Search Results
 
-When the Practice service returns JSON results from a search, it places them within a results array. Even if the service returns no results it still returns an empty results array.
+When the Practice service returns JSON results from a search, it places them within a results array. Even if the service returns no results it still returns an empty results array.  
 
-Each result within the results array may contain the following fields:
+Each result within the results array may contain the following fields:  
 
-- `id` - contains a unique stable identifier denoting this practice
-- `type` - describing the given practice. Possible types are:
-  - `"SINGLE"` an individual practice with one doctor
-  - `"GROUP"` for group practices.
-- `industries[]` generalizes all practice's fields into one or several of:
-  - `"ZAHNMEDIZIN"` - All dentist related fields
-  - `"FACHMEDIZIN"` - All regular doctor fields
-  - `"PRIVATMEDIZIN"` - Privat fields not covered by public insurance
-- `formatted_name` is a string containing the human-readable name of this practice
-- `name_components[]` is an array of separate name components. It can contain:
-  - `gender` can be either: `"Herr"` or `"Frau"`
-  - `title` contains the academic title like `"Dr."` or `"Prof. Dr."`
-  - `first_name` is the first name of the person
-  - `last_name` is the last name of the person
-  - `company` the name of the practice
-- `formatted_address` is a string containing the human-readable address of this place.
-- `international_phone_number` contains the place's phone number in international format.International format includes the country code, and is prefixed with the plus (+) sign. For example, the `international_phone_number` for Doxters's Berlin, Germany office is `"+49 30 609 849 65"` 
-- `url` contains the URL of the official doxter page for this practice
-- `rating` the user's overall rating for this practice. Optional.
-- `rating_count` the number of ratings for this practice. Optional, but always given when `rating` is.
-- `job_titles[]` contains an array of practice type or gender inflected specialties. For example: dentist will inflect to `"Zahnarzt"` for a single male practice, `"Zahnärztin"` for a single female practice and `"Zahnmedizin"` for a group practice.
-- `focuses[]` an array of focus areas of the practice. In contrast to the `job_titles` this is not a curated list. The list may contain entries like `"Ästhetische Zahnmedizin`", `"Prophylaxe"` or `"Invisalign"`
-- `photos[]` an array of photo urls. A Practice Search will return at most one photo object. 
-- `insurances[]` is a list of accepted insurances. It can contain `GKV` and `PKV`.
-- `geometry` contains geometry information about the result, including the location (geocode) of the place.
-- `address_components[]` is an array of separate address components used to compose a given address. It contains:
-  - `street`
-  - `zip`
-  - `city`
-- `status`: Status of the practice. Possible values are:
-  - `"DELETED"` - the practice has been deleted from doxter
-  - `"LISTED"` - the practice is listed on doxter
-- `available_times[]`: An array of times in ISO8601 format with available times of this practice or this doctor. Optional. 
+- `id` - contains a unique stable identifier denoting this practice  
+- `type` - describing the given practice. Possible types are:  
+  - `"SINGLE"` an individual practice with one doctor  
+  - `"GROUP"` for group practices.  
+- `industries[]` generalizes all practice's fields into one or several of:  
+  - `"ZAHNMEDIZIN"` - All dentist related fields  
+  - `"FACHMEDIZIN"` - All regular doctor fields  
+  - `"PRIVATMEDIZIN"` - Privat fields not covered by public insurance  
+- `formatted_name` is a string containing the human-readable name of this practice  
+- `name_components[]` is an array of separate name components. It can contain:  
+  - `gender` can be either: `"Herr"` or `"Frau"`  
+  - `title` contains the academic title like `"Dr."` or `"Prof. Dr."`  
+  - `first_name` is the first name of the person  
+  - `last_name` is the last name of the person  
+  - `company` the name of the practice  
+- `formatted_address` is a string containing the human-readable address of this place.  
+- `international_phone_number` contains the place's phone number in international format.International format includes the country code, and is prefixed with the plus (+) sign. For example, the `international_phone_number` for Doxters's Berlin, Germany office is `"+49 30 609 849 65"`  
+- `url` contains the URL of the official doxter page for this practice  
+- `rating` the user's overall rating for this practice. Optional.  
+- `rating_count` the number of ratings for this practice. Optional, but always given when `rating` is.  
+- `job_titles[]` contains an array of practice type or gender inflected specialties. For example: dentist will inflect to `"Zahnarzt"` for a single male practice, `"Zahnärztin"` for a single female practice and `"Zahnmedizin"` for a group practice.  
+- `focuses[]` an array of focus areas of the practice. In contrast to the `job_titles` this is not a curated list. The list may contain entries like `"Ästhetische Zahnmedizin`", `"Prophylaxe"` or `"Invisalign"`  
+- `photos[]` an array of photo urls. A Practice Search will return at most one photo object.  
+- `insurances[]` is a list of accepted insurances. It can contain `GKV` and `PKV`.  
+- `geometry` contains geometry information about the result, including the location (geocode) of the place.  
+- `address_components[]` is an array of separate address components used to compose a given address. It contains:  
+  - `street`  
+  - `zip`  
+  - `city`  
+- `status`: Status of the practice. Possible values are:  
+  - `"DELETED"` - the practice has been deleted from doxter  
+  - `"LISTED"` - the practice is listed on doxter  
+- `available_times[]`: An array of times in ISO8601 format with available times of this practice or this doctor. Optional.  
 
 

@@ -1,30 +1,29 @@
 ---
-layout: blog
+layout: default
 ---
 
 # Calendar API
 
 ## Doxter Synchronisation API v2.1
 
-#### Introduction
-#### Calendars
-#### GET /calendars
-####GET /calendars/{id}
-####Timeblocks
-####GET /calendars/{id}/timeblocks{?updated, show_deleted}
-####GET /calendars/{id}/timeblocks/{id}
-####Bookings
-####GET /calendars/{id}/bookings{?updated,status}
-####GET /calendars/{calendar_id}/bookings/{id}
-####PUT /calendars/{calendar_id}/bookings/{id}
-####Blockings
-####GET /calendars/{id}/blockings/{?updated}
-####POST /calendars/{calendar_id}/blockings
-####PUT /calendars/{calendar_id}/blockings/{id}
-####DELETE /calendars/{calendar_id}/blockings/{id}
+#### [Introduction](#01)
+#### [Calendars](#02)
+#### [GET /calendars](#03)
+#### [GET /calendars/{id}](#04)
+#### [Timeblocks](#05)
+#### [GET /calendars/{id}/timeblocks{?updated, show_deleted}](#06)
+#### [GET /calendars/{id}/timeblocks/{id}](#07)
+#### [Bookings](#08)
+#### [GET /calendars/{id}/bookings{?updated,status}](#09)
+#### [GET /calendars/{calendar_id}/bookings/{id}](#10)
+#### [PUT /calendars/{calendar_id}/bookings/{id}](#11)
+#### [Blockings](#12)
+#### [GET /calendars/{id}/blockings/{?updated}](#13)
+#### [POST /calendars/{calendar_id}/blockings](#14)
+#### [PUT /calendars/{calendar_id}/blockings/{id}](#15)
+#### [DELETE /calendars/{calendar_id}/blockings/{id}](#16)
 
-
-## Introduction
+## <a name="01"></a>Introduction
 
 Welcome to the doxter API specification for synchronisation. With the doxter API you can access your calendars, get updates of new bookings, reschedule bookings and block available times.  
 
@@ -39,17 +38,18 @@ API Base URL: https://www.doxter.de/api/v2/
 All times must be specified in **iso8601 format**.  
 
 4 RESTful verbs are supported:  
+
 - GET: find objects  
 - POST: create new objects  
 - PUT: update objects  
 - DELETE: remove objects  
 
-## Calendars
+## <a name="02"></a>Calendars
 
 Booked bookings are stored on the calendars. Calendars are created for the type of patients and problems a practice wants to be able to book. Furthermore calendars contain rules such as the window within patients are able to see available times. Since many practices discriminate between patients and services they offer, calendars contain an internal name to indicate what the calendar is used for.  
 
 
-#### GET /calendars
+#### <a name="03"></a>GET /calendars
 
 Get all calendars from all accounts the user has access rights to.  
 
@@ -87,14 +87,15 @@ Fields in the response
 ```
 
 error case (wrong credentials):  
+
 ```
-curl -I "https://www.doxter.de/api/v2/calendars" -u hacker@example.com:fakepwd  
+curl -I "https://www.doxter.de/api/v2/calendars" -u hacker@example.com:fakepwd
 ```
 
 response(status): 401  
 
 
-#### GET /calendars/{id}
+#### <a name="04"></a>GET /calendars/{id}
 
 Retrieve a single calendar. Includes general information about the calendar not including  bookings nor timeblocks.  
 
@@ -127,14 +128,15 @@ curl -I "https://www.doxter.de/api/v2/calendars/doesnotexist" -u login@example.c
 response status: 404  
 
 
-## Timeblocks
+## <a name="05"></a>Timeblocks
 
 A timeblock defines a repeated time interval for which available times are generated. Not all generated times will be visible; valid duration, existing bookings and booking rules can prevent timeblock times from actually being shown to the user.  
 
 
-#### GET /calendars/{id}/timeblocks{?updated, show_deleted}
+#### <a name="06"></a>GET /calendars/{id}/timeblocks{?updated, show_deleted}
 
 parameters:  
+
 - **updated** (optional): returns only timeblocks which are modified at or after the provided time.  
 - **show_deleted:** whether to include deleted timeblocks (with 'status' equals ‘deleted’) in the result. The default is False.  
 
@@ -153,6 +155,7 @@ Content-Type: application/json
 ### Response Body
 
 Fields in the reponse:  
+
 - **activated**: only if active, timeblocks will be generated  
 - **begins_at**: inclusive time where the generation of available times starts  
 - **ends_at**: exclusive time where generation stops. This time is not generated.  
@@ -211,7 +214,7 @@ Fields in the reponse:
 ]
 ```
 
-#### GET /calendars/{id}/timeblocks/{id}
+#### <a name="07"></a>GET /calendars/{id}/timeblocks/{id}
 
 Get a specific timeblock for a given calendar.   
 
@@ -252,13 +255,13 @@ Fields in the reponse are the same as above.
     }
 ```
 
-## Bookings
+## <a name="08"></a>Bookings
 
 Bookings are the appointments made by patients on doxter.  
 
 Through API booking cannot be created,  instead should be synchronized through blockings.  
 
-#### GET /calendars/{id}/bookings{?updated,status}
+#### <a name="09"></a>GET /calendars/{id}/bookings{?updated,status}
 
 Get all updated bookings for the specified calendar. This will return all bookings since updated. Even canceled ones.  
 
@@ -275,6 +278,7 @@ Content-Type: application/json
 ### Response Body
 
 Fields in the response  
+
 - **reason**: The problem or service (Behandlung) the patient booked an appointment  
 - **confirmation_link**: Visiting the confirmation link prbookings doxter support to call the practice to verify if the booking has been seen.  
 - **first_name**: Contains full_name  
@@ -351,7 +355,7 @@ Content-Type: application/json
 }
 ```
 
-#### GET /calendars/{calendar_id}/bookings/{id}
+#### <a name="10"></a>GET /calendars/{calendar_id}/bookings/{id}
 
 Get the specified booking for the specified calendar.  
 
@@ -368,6 +372,7 @@ Content-Type: application/json
 ### Response Body
 
 Fields in the response  
+
 - **reason**: The problem or service the patient booked an appointment for  
 - **confirmation_link**: Visiting the confirmation link prbookings doxter support to call the practice to verify if the booking has been seen.  
 - **first_name**: Contains full_name  
@@ -415,11 +420,12 @@ Content-Type: application/json
 }
 ```
 
-#### PUT /calendars/{calendar_id}/bookings/{id}
+#### <a name="11"></a>PUT /calendars/{calendar_id}/bookings/{id}
 
 Update a booking. Doesn’t have any side effects, including sending SMS or emails. All parameters are optional, but at least one of them should be provided.  
 
 parameters:  
+
 - **title** (optional): Title of the booking  
 - **starts** (optional): Booking start time  
 - **ends** (optional): Booking end time; must be after start time  
@@ -445,6 +451,7 @@ Content-Type: application/json
 ### Response Body
 
 Fields in the response  
+
 - **reason**: The problem or service the patient booked an appointment for  
 - **confirmation_link**: Visiting the confirmation link prbookings doxter support to call the practice to verify if the booking has been seen.  
 - **first_name**: Contains full_name  
@@ -490,16 +497,17 @@ Content-Type: application/json
 ```
 
 
-## Blockings
+## <a name="12"></a>Blockings
 
 Blockings prevent times from being shown on doxter, e.g. vacations, or a specific date a practice doesn’t want to accept patients because of an equipment failure or other exceptional occurrences. Our API allows complete control over blockings from the user side. Be aware that if you create a blocking on a calendar, that calendar won’t show and allow bookings for that time frame.  
 
 
-#### GET /calendars/{id}/blockings/{?updated}
+#### <a name="13"></a>GET /calendars/{id}/blockings/{?updated}
 
 Get all updated blockings for the specified calendar.  
 
 ### Request params
+
 - **updated**: ISO8601 time. Only gives events which where updated since from and including that time.  
 
 ```
@@ -557,7 +565,7 @@ Content-Type: application/json
 }
 ```
 
-#### POST /calendars/{calendar_id}/blockings
+#### <a name="14"></a>POST /calendars/{calendar_id}/blockings
 
 Create a new blocking on the specified doxter calendar. Every event blocking on doxter will prevent the generation of available times during that duration.  
 
@@ -574,6 +582,7 @@ Content-Type: application/json
 ### Response Body
 
 Fields in the reponse:  
+
 - **_id**: Id of created event  
 - **title**: Title of the event  
 - **starts**: start time of event (inclusive)  
@@ -592,13 +601,14 @@ Fields in the reponse:
 }
 ```
 
-#### PUT /calendars/{calendar_id}/blockings/{id}
+#### <a name="15"></a>PUT /calendars/{calendar_id}/blockings/{id}
 
 Updates an existing blocking. This can be used move an existing blocking on doxter to the another time. At least one parameter must be provided.  
 
 **Important Notice**: _When providing a recurrence, keep in mind that the end date for the blocking is expected to be included in the recurrence rule. The end *TIME* for the event is derived from the time that is provided in the ends field. If the recurrence is infinite, the end date will be start date + 99 years, and the ends time will be appended to it. If the UNTIL is provided in the rule, the ends field will become the until date + the ends field time part._  
 
 **parameters:**  
+
 - title (optional)  
 - starts (optional)  
 - ends (optional)  
@@ -629,7 +639,7 @@ Content-Type: application/json
 ```
 
 
-#### DELETE /calendars/{calendar_id}/blockings/{id}
+#### <a name="16"></a>DELETE /calendars/{calendar_id}/blockings/{id}
 
 Deletes an existing blocking.  
 

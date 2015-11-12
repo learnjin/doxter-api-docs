@@ -205,3 +205,43 @@ Each result within the results array may contain the following fields:
 - `available_times[]`: An array of times in ISO8601 format with available times of this practice or this doctor. Optional.  
 
 
+## Doctor details
+
+This service returns detailed information about a doctor. A request is an HTTP URL of the following form:  
+
+```
+GET https://practices.doxterapis.com/v1/doctors/{id}
+```
+
+**required parameters**  
+
+- `id` - doxter doctor id obtained from a doctor or practice search
+
+## Response
+
+```JSON
+{
+    "id": "4dc96eb2dc6e9a0af3000045",
+    "gender": "Herr",
+    "title": "Dr. ",
+    "first_name": "Dietrich",
+    "last_name": "Gericke",
+    "job_titles": [
+        "Zahnarzt"
+    ],
+    "focuses": [
+        "Master of Science Endodontie",
+        "Wurzelkanalbehandlung unter dem Dentalmikroskop"
+    ],
+    "photo": "https://doxter-de.s3.amazonaws.com/assets/images/doctors/4dc96eb2dc6e9a0af3000045.jpeg",
+    "rating": 4.555555555555555,
+    "rating_count": 9,
+    "available_times": [
+        "2015-11-16T07:00:00.000Z",
+        "2015-11-16T07:30:00.000Z"
+    ],
+    "url": "https://www.doxter.de/doctors/4dc96eb2dc6e9a0af3000045",
+    "status": "LISTED"
+}
+```
+

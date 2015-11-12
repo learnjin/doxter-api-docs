@@ -75,6 +75,10 @@ Search responses are returned JSON format. The following example shows a search 
                 "zip": "93053",
                 "city": "Regensburg"
             },
+            "doctors":  [
+               "54ddef6d3030312a5d420000",
+               "54ddef6d3030312a5d420001",
+            ]
             "status": "LISTED"
         },
         {
@@ -129,6 +133,9 @@ Search responses are returned JSON format. The following example shows a search 
                 "2015-06-15T08:30:00+02:00",
                 "2015-06-15T14:30:00+02:00",
                 "2015-06-17T10:00:00+02:00"
+            ],
+            "doctors":  [
+               "54ddef6d3030312a5d420000"
             ]
 
         }],
@@ -194,6 +201,7 @@ Each result within the results array may contain the following fields:
 - `status`: Status of the practice. Possible values are:  
   - `"DELETED"` - the practice has been deleted from doxter  
   - `"LISTED"` - the practice is listed on doxter  
+- `doctors` - a list of doxter ids of doctors that work in that practice
 - `available_times[]`: An array of times in ISO8601 format with available times of this practice or this doctor. Optional.  
 
 

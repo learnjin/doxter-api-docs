@@ -2,6 +2,9 @@
 layout: default
 ---
 
+* auto-gen TOC:
+{:toc}
+
 # Publisher API
 
 ## Contents
@@ -86,6 +89,10 @@ Search responses are returned JSON format. The following example shows a search 
                 "zip": "93053",
                 "city": "Regensburg"
             },
+            "doctors":  [
+               "54ddef6d3030312a5d420000",
+               "54ddef6d3030312a5d420001",
+            ]
             "status": "LISTED"
         },
         {
@@ -140,6 +147,9 @@ Search responses are returned JSON format. The following example shows a search 
                 "2015-06-15T08:30:00+02:00",
                 "2015-06-15T14:30:00+02:00",
                 "2015-06-17T10:00:00+02:00"
+            ],
+            "doctors":  [
+               "54ddef6d3030312a5d420000"
             ]
 
         }],
@@ -205,6 +215,47 @@ Each result within the results array may contain the following fields:
 - `status`: Status of the practice. Possible values are:  
   - `"DELETED"` - the practice has been deleted from doxter  
   - `"LISTED"` - the practice is listed on doxter  
+- `doctors` - a list of doxter ids of doctors that work in that practice
 - `available_times[]`: An array of times in ISO8601 format with available times of this practice or this doctor. Optional.  
 
+
+## Doctor details
+
+This service returns detailed information about a doctor. A request is an HTTP URL of the following form:  
+
+```
+GET https://practices.doxterapis.com/v1/doctors/{id}
+```
+
+**required parameters**  
+
+- `id` - doxter doctor id obtained from a doctor or practice search
+
+## Response
+
+```JSON
+{
+    "id": "4dc96eb2dc6e9a0af3000045",
+    "gender": "Herr",
+    "title": "Dr. ",
+    "first_name": "Dietrich",
+    "last_name": "Gericke",
+    "job_titles": [
+        "Zahnarzt"
+    ],
+    "focuses": [
+        "Master of Science Endodontie",
+        "Wurzelkanalbehandlung unter dem Dentalmikroskop"
+    ],
+    "photo": "https://doxter-de.s3.amazonaws.com/assets/images/doctors/4dc96eb2dc6e9a0af3000045.jpeg",
+    "rating": 4.555555555555555,
+    "rating_count": 9,
+    "available_times": [
+        "2015-11-16T07:00:00.000Z",
+        "2015-11-16T07:30:00.000Z"
+    ],
+    "url": "https://www.doxter.de/doctors/4dc96eb2dc6e9a0af3000045",
+    "status": "LISTED"
+}
+```
 

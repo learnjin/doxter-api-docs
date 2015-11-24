@@ -15,16 +15,16 @@ layout: default
 
 <!-- end toc -->
 
-## Introduction
+## <a name="introduction"></a>Introduction
 
 The doxter Practice API is a service that returns information about doctor practices using HTTP requests. The service is accessed as an HTTP request and returns JSON only. The Pratice API uses a doxter ID to uniquely identify a practice.  
 
-### Authentication
+### <a name="authentication"></a>Authentication
 
 The doxter Practice API uses BASIC AUTH to authenticate valid consumers. Contact Doxter to receive your credentials.  
 
 
-## Practice Search
+## <a name="practice-search"></a>Practice Search
 
 A Practice Search returns a list of practices along with summary information about each practice. The default is to return all active practices on doxter. The results may be paginated, in which case you find a `pageToken` in the metadata.  
 
@@ -43,7 +43,7 @@ _(token explanation is taken verbatim from google calendar api)_
 - `page_token` - Token obtained from the `next_page_token` field that is returned if the results are paginated. Optional, but always together with `sync_token`.  
 
 
-## Search Responses
+## <a name="search-responses"></a>Search Responses
 
 Search responses are returned JSON format. The following example shows a search result. The response has different fields depending on the type of practice.  
 
@@ -152,7 +152,7 @@ The JSON response contains two root elements:
 `meta` - contains metadata on the request. See Status and Synchronization below.  
 `results` - contains an array of practices with information about each. See Search Results for information about these results.  
 
-### Metadata
+### <a name="metadata"></a>Metadata
 
 #### Status Codes
 
@@ -167,7 +167,7 @@ Using the metadata from the Practice Service "you can keep data for all [practic
 
 - `next_page_token` - Token used to access the next page of this result. Omitted if no further results are available, in which case next_sync_token is provided.  
 
-## Search Results
+## <a name="search-results"></a>Search Results
 
 When the Practice service returns JSON results from a search, it places them within a results array. Even if the service returns no results it still returns an empty results array.  
 

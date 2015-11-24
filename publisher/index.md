@@ -2,9 +2,6 @@
 layout: default
 ---
 
-* auto-gen TOC:
-{:toc}
-
 # Publisher API
 
 ## Contents

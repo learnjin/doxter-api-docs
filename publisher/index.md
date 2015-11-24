@@ -2,6 +2,8 @@
 layout: default
 ---
 
+[ toc ]
+
 # Publisher API
 
 ## Introduction

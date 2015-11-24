@@ -2,7 +2,8 @@
 layout: default
 ---
 
-[ toc ]
+* auto-gen TOC:
+{:toc}
 
 # Publisher API
 

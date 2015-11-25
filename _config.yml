@@ -1,4 +1,4 @@
 name: doxter Blog
-markdown: redcarpet
+markdown: kramdown
 highlighter: pygments
 permalink: /:title/
